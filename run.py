@@ -92,41 +92,55 @@ def decrypt(ciphertext,private_key):
 
 
 while True:
-    op = input('''1 - Encrypt\n2 - Decrypt\n3 - Create Key Pair\n4 - Load Key Pair\n> ''')
+    op = input('''\n1 - Encrypt\n2 - Decrypt\n3 - Create Key Pair\n4 - Load Key Pair\n> ''')
 
 
     if(op=='1'):
 
-
-        f = open("./entrada.txt", "r")
-        lines = f.read()
-        encrypt(lines,public_key_from_file)
-        print("Success to Encrypt")
-    
-        #print("Fail to Encrypt")
+        try:
+            f = open("./entrada.txt", "r")
+            lines = f.read()
+            #mostra a informacao criptografada
+            print("\nCyphertext: ")
+            print(encrypt(lines,public_key_from_file))
+            print("\nArquivo criptografado com sucesso !!!")
+        except Exception as e:
+          print(e)
+          print("\nFalha ao criptografar")
+        
 
 
     if(op=='2'):
-   
-        f = open("./encrypted-data", "rb")
-        lines = f.read()
-        decrypt(lines,private_key_from_file)
+        try:
+            f = open("./encrypted-data", "rb")
+            lines = f.read()
+            print("\nPlaintext: ")
+            print(decrypt(lines,private_key_from_file))
+            print("\nDescriptografado com sucesso !!!")
+        except Exception as e:
+            print(e)
+            print("\nFalha ao descriptografar")
     
-        #print("Fail to decrypt")
-
+        
     if(op=='3'):
-        print("\ncreating a key pair...")
-        passcode = input("enter the passcode to save (keep it safe): ")
-        key_pair(passcode)
-        print("Sucess!!!")
-        #print("Fail to create a key pair")
+        print("\nCriando o par de chaves...")
+        try:
+            passcode = input("Digite uma senha para salvar: ")
+            key_pair(passcode)
+            print("\nPar de chaves criado com sucesso!!!")
+        except Exception as e:
+            print(e)
+            print("\nFalha ao criar o par de chaves")
 
     if(op=='4'):
-        print("\nloading a key pair...")
-        passcode = input("enter the passcode: ")
-        private_key_from_file,public_key_from_file = load_key_pair(passcode)
-        print(private_key_from_file)
-        print(public_key_from_file)
-        print("Sucess!!!")
-        #print("Fail in loading.\nCheck the keys files in current directory")
+        print("\nCarregando o par de chaves...")
+        try:
+            passcode = input("Informe a senha: ")
+            private_key_from_file,public_key_from_file = load_key_pair(passcode)
+            print(private_key_from_file)
+            print(public_key_from_file)
+            print("Par de chaves carregado com sucesso!!!")
+        except Exception as e :
+            print(e)
+            print("Falha em carregar as chaves.\nVerifique o diretorio atual")
 
