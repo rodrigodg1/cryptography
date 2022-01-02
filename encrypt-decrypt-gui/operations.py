@@ -13,6 +13,7 @@ from tkinter.filedialog import askopenfilename, asksaveasfilename
 import operations
 from tkinter import messagebox
 import time
+import base64
 from tkinter import *
 
 
@@ -43,7 +44,7 @@ def key_pair(passcode):
     f.close()
 
     #return private_key,public_key
-
+'''
 def load_private_key(passcode):
     passcode = passcode.encode()
     #open private key with password
@@ -54,7 +55,10 @@ def load_private_key(passcode):
         )
 
         return private_key_from_file
+'''
 
+
+'''
 def load_public_key():
     #open public key
     with open("./public_key.pem", "rb") as key_file:
@@ -64,7 +68,7 @@ def load_public_key():
     
     return public_key_from_file
 
-
+'''
 
 def save_file(ciphertext):
     """Save the current file as a new file."""
@@ -83,9 +87,7 @@ def save_file(ciphertext):
 
 
 
-
-
-def encrypt(message,public_key):
+def encrypt(message,public_key):    
     message = message.encode()
     ciphertext = public_key.encrypt(
     message,
