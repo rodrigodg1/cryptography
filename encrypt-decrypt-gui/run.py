@@ -8,6 +8,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 import os
 import json
+from tkinter import filedialog
 
 
 import tkinter as tk
@@ -21,7 +22,7 @@ from tkinter import simpledialog
 
 
 
-def create_key_pair(passcode="vincere"):
+def create_key_pair():
     try:
         messagebox.showwarning("Chaves", "Mantenha a chave privada em segurança e não compartilhe com ninguem !")
         passcode = simpledialog.askstring("Input", "Informe uma senha para a chave privada",
@@ -39,7 +40,14 @@ def create_key_pair(passcode="vincere"):
         encryption_algorithm=serialization.BestAvailableEncryption(passcode)
         )
 
-        f = open("./private_key.pem", "wb")
+        #escolha o diretorio para salvar o par de chaves
+        filepath = filedialog.askdirectory()
+
+        if not filepath:
+            return False
+
+
+        f = open(f"{filepath}/private_key.pem", "wb")
         f.write(pem_private_key)
         f.close()
 
@@ -49,16 +57,17 @@ def create_key_pair(passcode="vincere"):
         encoding=serialization.Encoding.PEM,
         format=serialization.PublicFormat.SubjectPublicKeyInfo
         )
-        f = open("./public_key.pem", "wb")
+
+        f = open(f"{filepath}/public_key.pem", "wb")
         f.write(pem_public_key)
         f.close()
-        #lbl_keys_loaded.after(1000, lbl_keys_loaded.destroy)
+       
         
         messagebox.showinfo("Chaves", "Par de chaves criado com sucesso ! Salve o em um local seguro !")
         
     except Exception as e:
         messagebox.showerror("Chaves", e)
-        messagebox.showerror("Chaves", "Erro ao criar o par de chaves !")
+        
 
 
 
@@ -133,21 +142,23 @@ def encrypt_step_1():
     
 
 def decrypt_step_1():
-    
-    try:
-        cypher_text = open_file()
-    
-        plain_text = operations.decrypt(cypher_text,private_key)
-        #decodifica para mostrar no campo de texto
-        plain_text = plain_text.decode()
-        txt_edit.delete(1.0, tk.END)
-        txt_edit.insert(tk.END, plain_text)
+    if(lbl_chave_privada_atual.get() == "Chave privada não carregada"):
+        messagebox.showerror("Erro", "Por favor, carregue a chave privada!")
+    else:
+        try:
+            cypher_text = open_file()
         
-    except Exception as e:
-        messagebox.showerror("Erro",e)
-        #messagebox.showerror("Descriptografar", "Chave Privada Não Carregada !")
+            plain_text = operations.decrypt(cypher_text,private_key)
+            #decodifica para mostrar no campo de texto
+            plain_text = plain_text.decode()
+            txt_edit.delete(1.0, tk.END)
+            txt_edit.insert(tk.END, plain_text)
+            
+        except Exception as e:
+            messagebox.showerror("Erro",e)
+            #messagebox.showerror("Descriptografar", "Chave Privada Não Carregada !")
 
-  
+    
 
 def save_file(data):
     """Save the current file as a new file."""
@@ -210,10 +221,10 @@ def load_private_key_step_1():
 
 
 def size_12():
-   txt_edit.config(font=('Helvatical bold',12))
+   txt_edit.config(font=('Helvetica',12))
 
 def size_20():
-   txt_edit.config(font=('Helvetica bold',20))
+   txt_edit.config(font=('Helvetica',20))
 
 
 
@@ -233,13 +244,12 @@ lbl_chave_publica_atual.set("Chave pública não carregada")
 
 global color_chave_privada
 global color_chave_publica
-
 color_chave_privada = "red"
 color_chave_publica = "red"
 
 txt_edit = tk.Text(window)
 
-fr_buttons = tk.Frame(window, relief=tk.RAISED, bd=3)
+fr_buttons = tk.Frame(window, relief=tk.RAISED, bd=0)
 #btn_open = tk.Button(fr_buttons, text="Open", command=open_file)
 #btn_save = tk.Button(fr_buttons, text="Save As...", command=save_file)
 #text = txt_edit.read()
