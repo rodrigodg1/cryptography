@@ -183,8 +183,8 @@ def load_public_key_step_1():
         public_key = open_public_key()
         if(public_key):
             messagebox.showinfo("Sucesso", "Chave pública carregada com sucesso !!!")
-            lbl_chave_publica_atual.set("Chave Pública Carregada")
-            color_chave_publica = "green"
+            lbl_chave_publica_atual.set("Chave Pública Carregada  ")
+            color_chave_publica = "light green"
             lbl_chave_publica = tk.Label(fr_buttons,bg=color_chave_publica, textvariable=lbl_chave_publica_atual)
             lbl_chave_publica.grid(row=11, column=0, sticky="ew", padx=5,pady=5)
     except Exception as e:
@@ -208,8 +208,8 @@ def load_private_key_step_1():
         if(private_key):
             messagebox.showinfo("Sucesso", "Chave privada carregada com sucesso !!!")
             
-            lbl_chave_privada_atual.set("Chave Privada Carregada")
-            color_chave_privada = "green"
+            lbl_chave_privada_atual.set("Chave Privada Carregada  ")
+            color_chave_privada = "light green"
             lbl_chave_privada = tk.Label(fr_buttons,bg=color_chave_privada, textvariable=lbl_chave_privada_atual)
             lbl_chave_privada.grid(row=12, column=0, sticky="ew", padx=5,pady=5)
 
@@ -228,8 +228,6 @@ def size_20():
 
 
 
-
-
 window = tk.Tk()
 window.title("Text Editor Application")
 window.rowconfigure(0, minsize=800, weight=1)
@@ -244,35 +242,35 @@ lbl_chave_publica_atual.set("Chave pública não carregada")
 
 global color_chave_privada
 global color_chave_publica
-color_chave_privada = "red"
-color_chave_publica = "red"
+color_chave_privada = "tomato"
+color_chave_publica = "tomato"
 
 txt_edit = tk.Text(window)
 
-fr_buttons = tk.Frame(window, relief=tk.RAISED, bd=0)
+fr_buttons = tk.Frame(window, relief=tk.RAISED, bd=2)
 #btn_open = tk.Button(fr_buttons, text="Open", command=open_file)
 #btn_save = tk.Button(fr_buttons, text="Save As...", command=save_file)
 #text = txt_edit.read()
 
 
-btn_encrypt = tk.Button(fr_buttons, text="Criptografar...", command=encrypt_step_1)
-btn_decrypt = tk.Button(fr_buttons, text="Descriptografar...", command=decrypt_step_1)
-btn_load_public_key = tk.Button(fr_buttons, text="Carregar Chave PÚBLICA...", command=load_public_key_step_1)
-btn_load_private_key = tk.Button(fr_buttons, bg="red",text="Carregar Chave PRIVADA...", command=load_private_key_step_1)
+btn_encrypt = tk.Button(fr_buttons, text="Criptografar...",height=2, width=19, command=encrypt_step_1)
+btn_decrypt = tk.Button(fr_buttons, text="Descriptografar...", height=2, width=19,command=decrypt_step_1)
+btn_load_public_key = tk.Button(fr_buttons, text="Carregar Chave PÚBLICA...", height=2, width=19, command=load_public_key_step_1)
+btn_load_private_key = tk.Button(fr_buttons, bg="tomato",text="Carregar Chave PRIVADA...", height=2, width=19, command=load_private_key_step_1)
 
 
 
 
 
 
-btn_create_key_pair = tk.Button(fr_buttons, text="Criar par de chaves ...", command=create_key_pair)
+btn_create_key_pair = tk.Button(fr_buttons, text="Criar par de chaves ...", height=2, width=19, command=create_key_pair)
 
 lbl_font_size = tk.Label(fr_buttons, text="Font Size:")
 lbl_chave_publica= tk.Label(fr_buttons,bg=color_chave_publica, textvariable=lbl_chave_publica_atual)
 lbl_chave_privada = tk.Label(fr_buttons,bg=color_chave_privada, textvariable=lbl_chave_privada_atual)
 
-button_size_12= Button(fr_buttons, text="12", command= size_12)
-button_size_20= Button(fr_buttons, text="20", command= size_20)
+button_size_12= Button(fr_buttons, text="12", height=2, width=19, command= size_12)
+button_size_20= Button(fr_buttons, text="20", height=2, width=19, command= size_20)
 #btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
 #btn_save.grid(row=1, column=0, sticky="ew", padx=5)
 btn_encrypt.grid(row=2, column=0, sticky="ew", padx=5)
@@ -286,8 +284,8 @@ lbl_font_size.grid(row=8, column=0, sticky="ew", padx=5,pady=15)
 button_size_12.grid(row=9, column=0, sticky="ew", padx=5)
 button_size_20.grid(row=10, column=0, sticky="ew", padx=5)
 
-lbl_chave_publica.grid(row=11, column=0, sticky="ew", padx=5,pady=10)
-lbl_chave_privada.grid(row=12, column=0, sticky="ew", padx=5,pady=0)
+lbl_chave_publica.grid(row=11, column=0, sticky="ew", padx=5,pady=5)
+lbl_chave_privada.grid(row=12, column=0, sticky="ew", padx=5,pady=5)
 
 fr_buttons.grid(row=0, column=0, sticky="ns")
 txt_edit.grid(row=0, column=1, sticky="nsew")
