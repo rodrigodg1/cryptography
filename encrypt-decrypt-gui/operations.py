@@ -1,3 +1,5 @@
+
+# -*- coding: UTF-8 -*-
 from typing import cast
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from cryptography.hazmat.primitives.asymmetric import rsa
@@ -15,7 +17,7 @@ from tkinter import *
 
 
 
-def key_pair(passcode="vincere"):
+def key_pair(passcode):
     passcode = passcode.encode()
     private_key = rsa.generate_private_key(public_exponent=65537,key_size=2048,)
     public_key = private_key.public_key()
@@ -75,7 +77,8 @@ def save_file(ciphertext):
     
     with open(filepath, "wb") as output_file:
         output_file.write(ciphertext)
-       
+
+     
 
 
 
@@ -93,9 +96,10 @@ def encrypt(message,public_key):
                  )
     )
 
+
     save_file(ciphertext)
 
-    return ciphertext
+    #return ciphertext
 
 
 def decrypt(ciphertext,private_key):
@@ -112,5 +116,5 @@ def decrypt(ciphertext,private_key):
     #f.write(plaintext)
     #f.close()
 
-
+    #print(plaintext)
     return plaintext

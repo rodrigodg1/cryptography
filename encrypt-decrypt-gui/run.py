@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 from typing import cast
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
@@ -75,21 +77,24 @@ def open_file():
 
 
 def encrypt_step_1():
-
-    public_key = operations.load_public_key()
-
-    text = txt_edit.get(1.0, tk.END)
     try:
-        cypher_text = operations.encrypt(text,public_key)
+        public_key = operations.load_public_key()
+
+        #print(public_key)
+        text = txt_edit.get(1.0, tk.END)
+        #print(text)
+        
+        operations.encrypt(text,public_key)
         #print(cypher_text)
         messagebox.showinfo("Criptografia", "Dados criptografados com sucesso!")
+        #txt_edit.delete(1.0, tk.END)
+        #txt_edit.insert(tk.END, cypher_text)
 
     except Exception as e:
         print(e)
         messagebox.showerror("Criptografia", "Erro ao criar o arquivo criptografado!")
 
-    txt_edit.delete(1.0, tk.END)
-    txt_edit.insert(tk.END, cypher_text)
+    
 
 def decrypt_step_1():
     passcode = simpledialog.askstring("Input", "Informe a senha da chave privada",
@@ -98,30 +103,27 @@ def decrypt_step_1():
     
         private_key = operations.load_private_key(passcode)
 
-    #cypher_text = txt_edit.get(1.0, tk.END)
-    #f = open("./encrypted-data", "wb")
-    #f.write(cypher_text.encode())
-    #f.close()
 
         cypher_text = open_file()
-
-    #cypher_text = txt_edit.get(1.0, tk.END)
     
         plain_text = operations.decrypt(cypher_text,private_key)
+        #decodifica para mostrar no campo de texto
+        plain_text = plain_text.decode()
+        txt_edit.delete(1.0, tk.END)
+        txt_edit.insert(tk.END, plain_text)
         
     except Exception as e:
         print(e)
         messagebox.showerror("Descriptografar", "Senha inválida !")
 
-    txt_edit.delete(1.0, tk.END)
-    txt_edit.insert(tk.END, plain_text)
+  
 
 
 def check_keys():
     keys_loaded = StringVar()
     try:
-        sk = open("private_key.pem")
-        pk = open("public_key.pem")
+        sk = open("./private_key.pem")
+        pk = open("./public_key.pem")
         messagebox.showinfo("Chaves", "Chaves carregadas com sucesso!")
         msg = "Chaves Carregadas"
         keys_loaded.set('Chaves Carregadas')
@@ -172,7 +174,7 @@ keys_loaded = check_keys()
 
 
 txt_edit = tk.Text(window)
-#txt_edit.config(font=('Helvatical bold',20))
+
 fr_buttons = tk.Frame(window, relief=tk.RAISED, bd=3)
 #btn_open = tk.Button(fr_buttons, text="Open", command=open_file)
 #btn_save = tk.Button(fr_buttons, text="Save As...", command=save_file)
